@@ -1,0 +1,7 @@
+[36m2018-06-28 19:31:00.017 UTC [msp] GetLocalMSP -> DEBU 001[0m Returning existing local MSP
+[36m2018-06-28 19:31:00.017 UTC [msp] GetDefaultSigningIdentity -> DEBU 002[0m Obtaining default signing identity
+2018-06-28 19:31:00.022 UTC [channelCmd] InitCmdFactory -> INFO 003[0m Endorser and orderer connections initialized
+[36m2018-06-28 19:31:00.022 UTC [msp/identity] Sign -> DEBU 004[0m Sign: plaintext: 0A89070A5B08011A0B08F4EED4D90510...64245F699A5D1A080A000A000A000A00 
+[36m2018-06-28 19:31:00.036 UTC [msp/identity] Sign -> DEBU 005[0m Sign: digest: E5FD10C6E2DE2C26560CE938A7F00BEE59550FBD6BD6B26F02EDA3E4285C7385 
+2018-06-28 19:31:00.497 UTC [channelCmd] executeJoin -> INFO 006[0m Successfully submitted proposal to join channel
+2018-06-28 19:31:00.497 UTC [main] main -> INFO 007[0m Exiting.....

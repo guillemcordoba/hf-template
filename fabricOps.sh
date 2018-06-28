@@ -43,14 +43,22 @@ function replacePrivateKey () {
 	cp docker-compose-template.yaml docker-compose.yaml
 
     CURRENT_DIR=$PWD
-    cd crypto-config/peerOrganizations/org1.example.com/ca/
+    cd crypto-config/peerOrganizations/fis.upc.edu/ca/
     PRIV_KEY=$(ls *_sk)
     cd $CURRENT_DIR
     sed $OPTS "s/CA1_PRIVATE_KEY/${PRIV_KEY}/g" docker-compose.yaml
-    cd crypto-config/peerOrganizations/org2.example.com/ca/
+    cd crypto-config/peerOrganizations/mat.upc.edu/ca/
     PRIV_KEY=$(ls *_sk)
     cd $CURRENT_DIR
     sed $OPTS "s/CA2_PRIVATE_KEY/${PRIV_KEY}/g" docker-compose.yaml
+    cd crypto-config/peerOrganizations/dac.upc.edu/ca/
+    PRIV_KEY=$(ls *_sk)
+    cd $CURRENT_DIR
+    sed $OPTS "s/CA3_PRIVATE_KEY/${PRIV_KEY}/g" docker-compose.yaml
+    cd crypto-config/peerOrganizations/entel.upc.edu/ca/
+    PRIV_KEY=$(ls *_sk)
+    cd $CURRENT_DIR
+    sed $OPTS "s/CA4_PRIVATE_KEY/${PRIV_KEY}/g" docker-compose.yaml
 }
 
 function generateCerts(){
@@ -87,13 +95,13 @@ function generateChannelArtifacts(){
 	echo "### Generating channel configuration transaction 'channel.tx' ###"
 	echo "#################################################################"
 
-    $GOPATH/bin/configtxgen -profile TwoOrgsOrdererGenesis -outputBlock ./channel-artifacts/genesis.block
+    $GOPATH/bin/configtxgen -profile UpcOrdererGenesis -outputBlock ./channel-artifacts/genesis.block
 
     echo
 	echo "#################################################################"
 	echo "#######    Generating anchor peer update for Org1MSP   ##########"
 	echo "#################################################################"
-    $GOPATH/bin/configtxgen -profile TwoOrgsChannel -outputCreateChannelTx ./channel-artifacts/channel.tx -channelID "mychannel"
+    $GOPATH/bin/configtxgen -profile general -outputCreateChannelTx ./channel-artifacts/channelgeneral.tx -channelID "channelgeneral"
 
 }
 
@@ -138,7 +146,7 @@ function cleanNetwork() {
     docker rmi -f $(docker images -q)
     
     # This removes containers used to support the running chaincode.
-    #docker rm -f $(docker ps --filter "name=dev" --filter "name=peer0.org1.example.com" --filter "name=cli" --filter "name=orderer.example.com" -q)
+    #docker rm -f $(docker ps --filter "name=dev" --filter "name=peer0.org1.upc.edu" --filter "name=cli" --filter "name=orderer.upc.edu" -q)
 
     # This removes only images hosting a running chaincode, and in this
     # particular case has the prefix dev-* 

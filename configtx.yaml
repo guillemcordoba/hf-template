@@ -1,4 +1,4 @@
-
+# Definir el consorcio i los canales
 ---
 ################################################################################
 #
@@ -10,23 +10,42 @@
 ################################################################################
 Profiles:
 
-    TwoOrgsOrdererGenesis:
+    UpcOrdererGenesis:
         Orderer:
             <<: *OrdererDefaults
             Organizations:
                 - *OrdererOrg
         Consortiums:
-            SampleConsortium:
+            UpcConsortium:
                 Organizations:
-                    - *Org1
-                    - *Org2
-    TwoOrgsChannel:
-        Consortium: SampleConsortium
+                    - *mat
+                    - *dac
+                    - *entel
+                    - *fis
+    general:
+        Consortium: UpcConsortium
         Application:
             <<: *ApplicationDefaults
             Organizations:
-                - *Org1
-                - *Org2
+                - *mat
+                - *dac
+                - *entel
+                - *fis
+    channel0:
+        Consortium: UpcConsortium
+        Application:
+            <<: *ApplicationDefaults
+            Organizations:
+                - *mat
+                - *dac
+                - *fis
+    channel1:
+        Consortium: UpcConsortium
+        Application:
+            <<: *ApplicationDefaults
+            Organizations:
+                - *mat
+                - *entel
 
 ################################################################################
 #
@@ -49,40 +68,74 @@ Organizations:
         ID: OrdererMSP
 
         # MSPDir is the filesystem path which contains the MSP configuration
-        MSPDir: crypto-config/ordererOrganizations/example.com/msp
+        MSPDir: crypto-config/ordererOrganizations/upc.edu/msp
 
-    - &Org1
+    - &mat
         # DefaultOrg defines the organization which is used in the sampleconfig
         # of the fabric.git development environment
-        Name: Org1MSP
+        Name: matMSP
 
         # ID to load the MSP definition as
-        ID: Org1MSP
+        ID: matMSP
 
-        MSPDir: crypto-config/peerOrganizations/org1.example.com/msp
+        MSPDir: crypto-config/peerOrganizations/mat.upc.edu/msp
 
         AnchorPeers:
             # AnchorPeers defines the location of peers which can be used
             # for cross org gossip communication.  Note, this value is only
             # encoded in the genesis block in the Application section context
-            - Host: peer0.org1.example.com
+            - Host: peer0.mat.upc.edu
               Port: 7051
 
-    - &Org2
+    - &fis
         # DefaultOrg defines the organization which is used in the sampleconfig
         # of the fabric.git development environment
-        Name: Org2MSP
+        Name: fisMSP
 
         # ID to load the MSP definition as
-        ID: Org2MSP
+        ID: fisMSP
 
-        MSPDir: crypto-config/peerOrganizations/org2.example.com/msp
+        MSPDir: crypto-config/peerOrganizations/fis.upc.edu/msp
 
         AnchorPeers:
             # AnchorPeers defines the location of peers which can be used
             # for cross org gossip communication.  Note, this value is only
             # encoded in the genesis block in the Application section context
-            - Host: peer0.org2.example.com
+            - Host: peer0.fis.upc.edu
+              Port: 7051
+
+    - &dac
+        # DefaultOrg defines the organization which is used in the sampleconfig
+        # of the fabric.git development environment
+        Name: dacMSP
+
+        # ID to load the MSP definition as
+        ID: dacMSP
+
+        MSPDir: crypto-config/peerOrganizations/dac.upc.edu/msp
+
+        AnchorPeers:
+            # AnchorPeers defines the location of peers which can be used
+            # for cross org gossip communication.  Note, this value is only
+            # encoded in the genesis block in the Application section context
+            - Host: peer0.dac.upc.edu
+              Port: 7051
+
+    - &entel
+        # DefaultOrg defines the organization which is used in the sampleconfig
+        # of the fabric.git development environment
+        Name: entelMSP
+
+        # ID to load the MSP definition as
+        ID: entelMSP
+
+        MSPDir: crypto-config/peerOrganizations/entel.upc.edu/msp
+
+        AnchorPeers:
+            # AnchorPeers defines the location of peers which can be used
+            # for cross org gossip communication.  Note, this value is only
+            # encoded in the genesis block in the Application section context
+            - Host: peer0.entel.upc.edu
               Port: 7051
 
 ################################################################################
@@ -100,7 +153,7 @@ Orderer: &OrdererDefaults
     OrdererType: solo
 
     Addresses:
-        - orderer.example.com:7050
+        - orderer.upc.edu:7050
 
     # Batch Timeout: The amount of time to wait before creating a batch
     BatchTimeout: 2s
